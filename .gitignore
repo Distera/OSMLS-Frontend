@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# generated
+src/app/generated
+
 # compiled output
 /dist
 /tmp
