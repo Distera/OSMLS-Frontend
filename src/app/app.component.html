@@ -1,1 +1,18 @@
-<app-map></app-map>
+<div nz-row>
+  <div nz-col nzFlex="auto">
+    <app-map></app-map>
+  </div>
+  <div nz-col id="toolbar" nzFlex="300px">
+    <nz-space [nzDirection]="'vertical'">
+      <nz-space-item>
+        <app-model></app-model>
+      </nz-space-item>
+      <nz-space-item>
+        <app-assembly></app-assembly>
+      </nz-space-item>
+      <nz-space-item>
+        <app-module></app-module>
+      </nz-space-item>
+    </nz-space>
+  </div>
+</div>

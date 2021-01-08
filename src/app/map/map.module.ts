@@ -1,11 +1,8 @@
 import {NgModule} from '@angular/core';
 
 import {MapComponent} from './map.component';
-import {CommonModule, registerLocaleData} from '@angular/common';
-import en from '@angular/common/locales/en';
+import {CommonModule} from '@angular/common';
 import {MapBrowserComponent} from './map-browser/map-browser.component';
-
-registerLocaleData(en);
 
 @NgModule({
   imports: [

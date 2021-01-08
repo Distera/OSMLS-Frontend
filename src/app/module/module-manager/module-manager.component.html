@@ -1,0 +1,7 @@
+<nz-select nzMode="multiple" nzPlaceHolder="Select modules for the model" [(ngModel)]="modelModules">
+  <nz-option *ngFor="let module of modules" [nzLabel]="module" [nzValue]="module"></nz-option>
+</nz-select>
+
+<button nz-button nzType="text" [nzLoading]="isModulesLoading" (click)="updateModules()">
+  <i nz-icon nzType="sync" nzTheme="outline"></i>
+</button>
