@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "api": "ng-openapi-gen -i swagger.json -o src/app/generated/api",
     "proto": "protoc --plugin=protoc-gen-ts=\".\\node_modules\\.bin\\protoc-gen-ts.cmd\" --js_out=\"import_style=commonjs,binary:src/app/generated\" --ts_out=\"service=grpc-web:src/app/generated\" ./protos/map.proto",
-    "generate": "npm run proto",
+    "generate": "npm run api && npm run proto",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
