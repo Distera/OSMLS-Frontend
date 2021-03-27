@@ -9,7 +9,7 @@
     "generate-windows": "npm run api && npm run proto-windows",
     "generate-linux": "npm run api && npm run proto-linux",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
