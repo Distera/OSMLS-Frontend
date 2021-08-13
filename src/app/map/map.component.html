@@ -1,1 +1,10 @@
-<app-map-browser *ngIf="mapFeaturesCluster" [mapFeaturesCluster]="mapFeaturesCluster"></app-map-browser>
+<div nz-row>
+  <div nz-col [nzSpan]="16" [nzPush]="8">
+    <app-map-browser></app-map-browser>
+  </div>
+  <div nz-col [nzSpan]="8" [nzPull]="16">
+    <app-map-properties (setPropertyEvent)="setMapFeatureObservableProperty($event)"></app-map-properties>
+  </div>
+</div>
+
+
