@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {
   MapFeatureObservableProperty,
   MapFeaturesMetadata, ObservableProperty,
@@ -71,7 +71,8 @@ export class MapPropertiesComponent {
     observablePropertyValue: ObservablePropertyValue,
     valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
       keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
-      ]): any {
+      ]
+  ): any {
     switch (valueType) {
       case 0:
         return observablePropertyValue.getDouble();
@@ -98,7 +99,8 @@ export class MapPropertiesComponent {
     value: any,
     valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
       keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
-      ]): ObservablePropertyValue {
+      ]
+  ): ObservablePropertyValue {
     const observablePropertyValue = new ObservablePropertyValue();
 
     switch (valueType) {

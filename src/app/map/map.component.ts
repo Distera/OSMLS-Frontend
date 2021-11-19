@@ -14,6 +14,7 @@ import MethodDefinition = grpc.MethodDefinition;
 import ProtobufMessage = grpc.ProtobufMessage;
 import {Observable} from 'rxjs';
 import {MapPropertiesComponent} from './map-properties/map-properties.component';
+import {MapReportComponent} from './map-report/map-report.component';
 
 @Component({
   selector: 'app-map',
@@ -30,6 +31,9 @@ export class MapComponent implements OnInit {
 
   @ViewChild(MapPropertiesComponent, {static: false})
   private mapPropertiesComponent?: MapPropertiesComponent;
+
+  @ViewChild(MapReportComponent, {static: false})
+  private mapReportComponent?: MapReportComponent;
 
   private observeMessages(methodDescriptor: MethodDefinition<ProtobufMessage, ProtobufMessage>): Observable<ProtobufMessage> {
     const client = grpc.client(methodDescriptor, {
@@ -143,6 +147,7 @@ export class MapComponent implements OnInit {
   private handleMapFeaturesMetadata(mapFeaturesMetadata: MapFeaturesMetadata): void {
     this.mapBrowserComponent?.addLayer(mapFeaturesMetadata);
     this.mapPropertiesComponent?.addMetadata(mapFeaturesMetadata);
+    this.mapReportComponent?.addMetadata(mapFeaturesMetadata);
   }
 
   private handleMapFeature(mapFeature: MapFeature): void {
@@ -156,5 +161,6 @@ export class MapComponent implements OnInit {
 
   private handleMapFeatureObservableProperty(mapFeatureObservableProperty: MapFeatureObservableProperty): void {
     this.mapPropertiesComponent?.addProperty(mapFeatureObservableProperty);
+    this.mapReportComponent?.addProperty(mapFeatureObservableProperty);
   }
 }

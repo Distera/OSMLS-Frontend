@@ -1,1 +1,21 @@
+.map-container {
+  position: relative;
+}
 
+$map-details-width: 700px;
+
+.map-browser-container {
+  margin-right: $map-details-width;
+}
+
+.map-details-container {
+  width: $map-details-width;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  padding: 3px;
+
+  max-height: 100%;
+  overflow: auto;
+}

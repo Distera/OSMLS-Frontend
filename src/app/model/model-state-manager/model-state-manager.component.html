@@ -5,14 +5,24 @@
   </button>
 </p>
 
-<button nz-button nzType="primary" [disabled]="state === states.Active" (click)="state = states.Active">
-  Run <i nz-icon nzType="caret-left" nzTheme="outline"></i>
-</button>
+<nz-space nzDirection="horizontal">
+  <nz-space-item>
+    <button nz-button nzType="primary" [disabled]="state === states.Active" (click)="state = states.Active">
+      Run <i nz-icon nzType="caret-left" nzTheme="outline"></i>
+    </button>
+  </nz-space-item>
 
-<button nz-button nzType="default" [disabled]="state === states.Paused || state === states.Stopped" (click)="state = states.Paused">
-  Pause <i nz-icon nzType="pause-circle" nzTheme="outline"></i>
-</button>
+  <nz-space-item>
+    <button nz-button nzType="default" [disabled]="state === states.Paused || state === states.Stopped"
+            (click)="state = states.Paused">
+      Pause <i nz-icon nzType="pause-circle" nzTheme="outline"></i>
+    </button>
+  </nz-space-item>
 
-<button nz-button [nzDanger]="true" nzType="default" [disabled]="state === states.Stopped" (click)="state = states.Stopped">
-  Stop <i nz-icon nzType="stop" nzTheme="outline"></i>
-</button>
+  <nz-space-item>
+    <button nz-button [nzDanger]="true" nzType="default" [disabled]="state === states.Stopped"
+            (click)="state = states.Stopped">
+      Stop <i nz-icon nzType="stop" nzTheme="outline"></i>
+    </button>
+  </nz-space-item>
+</nz-space>

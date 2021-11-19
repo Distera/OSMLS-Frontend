@@ -10,6 +10,14 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzCollapseModule} from 'ng-zorro-antd/collapse';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {VarDirective} from 'src/app/infrastructure/ng-var.directive';
+import {MapReportComponent} from './map-report/map-report.component';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {NzDividerModule} from 'ng-zorro-antd/divider';
+import {NzTabsModule} from 'ng-zorro-antd/tabs';
+import {NzEmptyModule} from 'ng-zorro-antd/empty';
+import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
+import {FormsModule} from '@angular/forms';
+import {NzIconModule} from 'ng-zorro-antd/icon';
 
 @NgModule({
   imports: [
@@ -19,8 +27,15 @@ import {VarDirective} from 'src/app/infrastructure/ng-var.directive';
     NzGridModule,
     NzCollapseModule,
     NzInputModule,
+    NzDividerModule,
+    NgxChartsModule,
+    NzTabsModule,
+    NzEmptyModule,
+    NzInputNumberModule,
+    FormsModule,
+    NzIconModule,
   ],
-  declarations: [MapComponent, MapBrowserComponent, MapPropertiesComponent, VarDirective],
+  declarations: [MapComponent, MapBrowserComponent, MapPropertiesComponent, MapReportComponent, VarDirective],
   exports: [MapComponent]
 })
 export class MapModule {
