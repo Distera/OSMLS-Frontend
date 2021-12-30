@@ -3,7 +3,8 @@
     *ngFor="let metadata of mapFeaturesWithObservablePropertiesMetadata"
     [nzHeader]="metadata.getTypeFullName()"
   >
-    <nz-table #featuresTable *ngVar="idsToFeaturesByType.getValue(metadata.getTypeFullName())! as idsToFeatures"
+    <nz-table #featuresTable class="featuresTable"
+              *ngVar="idsToFeaturesByType.getValue(metadata.getTypeFullName())! as idsToFeatures"
               [nzData]="idsToFeatures.keys()">
       <thead>
       <tr>
