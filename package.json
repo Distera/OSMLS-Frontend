@@ -11,6 +11,7 @@
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
+    "test:coverage": "ng test --code-coverage",
     "test:ci": "ng test --karma-config karma.conf.ci.js",
     "lint": "ng lint",
     "e2e": "ng e2e"

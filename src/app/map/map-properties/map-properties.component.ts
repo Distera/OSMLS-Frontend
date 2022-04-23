@@ -16,58 +16,12 @@ export class MapPropertiesComponent {
 
   public idsToFeaturesByType = new Dictionary<string, Dictionary<string, Dictionary<string, ObservablePropertyValue>>>();
 
-  public editData?: {
-    type: string,
-    id: string,
-    title: string,
-    valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
-      keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
-      ],
-    currentValue: any
-  };
+  public editData?: IEditDate;
 
   @Output()
   setPropertyEvent = new EventEmitter<MapFeatureObservableProperty>();
 
-  addMetadata(mapFeaturesMetadata: MapFeaturesMetadata): void {
-    if (mapFeaturesMetadata.getObservablePropertiesMetadataList().length !== 0) {
-      this.mapFeaturesWithObservablePropertiesMetadata.push(mapFeaturesMetadata);
-
-      this.idsToFeaturesByType.setValue(mapFeaturesMetadata.getTypeFullName(), new Dictionary<string, any>());
-    }
-  }
-
-  addProperty(mapFeatureObservableProperty: MapFeatureObservableProperty): void {
-    const idsToFeatures = this.idsToFeaturesByType.getValue(mapFeatureObservableProperty.getTypeFullName());
-
-    if (idsToFeatures === undefined) {
-      throw new Error('Ids to features dictionary is not defined.');
-    }
-
-    const id = mapFeatureObservableProperty.getId();
-    let feature = idsToFeatures.getValue(id);
-
-    if (feature === undefined) {
-      feature = new Dictionary<string, ObservablePropertyValue>();
-      idsToFeatures.setValue(id, feature);
-    }
-
-    // tslint:disable-next-line:no-non-null-assertion
-    const observableProperty = mapFeatureObservableProperty.getObservableProperty()!;
-
-    const observablePropertyValue = observableProperty.getValue();
-    if (observablePropertyValue === undefined) {
-      throw new Error('Observable property value is not defined.');
-    }
-
-    feature.setValue(observableProperty.getTitle(), observablePropertyValue);
-  }
-
-  removeFeature(removeMapFeatureEvent: RemoveMapFeatureEvent): void {
-    this.idsToFeaturesByType.getValue(removeMapFeatureEvent.getTypeFullName())?.remove(removeMapFeatureEvent.getId());
-  }
-
-  getValue(
+  static getValue(
     observablePropertyValue: ObservablePropertyValue,
     valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
       keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
@@ -95,7 +49,7 @@ export class MapPropertiesComponent {
     }
   }
 
-  setValue(
+  static setValue(
     value: any,
     valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
       keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
@@ -136,6 +90,44 @@ export class MapPropertiesComponent {
     return observablePropertyValue;
   }
 
+  addMetadata(mapFeaturesMetadata: MapFeaturesMetadata): void {
+    if (mapFeaturesMetadata.getObservablePropertiesMetadataList().length !== 0) {
+      this.mapFeaturesWithObservablePropertiesMetadata.push(mapFeaturesMetadata);
+
+      this.idsToFeaturesByType.setValue(mapFeaturesMetadata.getTypeFullName(), new Dictionary<string, any>());
+    }
+  }
+
+  addProperty(mapFeatureObservableProperty: MapFeatureObservableProperty): void {
+    const idsToFeatures = this.idsToFeaturesByType.getValue(mapFeatureObservableProperty.getTypeFullName());
+
+    if (idsToFeatures === undefined) {
+      throw new Error('Ids to features dictionary is not defined.');
+    }
+
+    const id = mapFeatureObservableProperty.getId();
+    let feature = idsToFeatures.getValue(id);
+
+    if (feature === undefined) {
+      feature = new Dictionary<string, ObservablePropertyValue>();
+      idsToFeatures.setValue(id, feature);
+    }
+
+    // tslint:disable-next-line:no-non-null-assertion
+    const observableProperty = mapFeatureObservableProperty.getObservableProperty()!;
+
+    const observablePropertyValue = observableProperty.getValue();
+    if (observablePropertyValue === undefined) {
+      throw new Error('Observable property value is not defined.');
+    }
+
+    feature.setValue(observableProperty.getTitle(), observablePropertyValue);
+  }
+
+  removeFeature(removeMapFeatureEvent: RemoveMapFeatureEvent): void {
+    this.idsToFeaturesByType.getValue(removeMapFeatureEvent.getTypeFullName())?.remove(removeMapFeatureEvent.getId());
+  }
+
   public stopEdit(newValue: any): void {
     if (this.editData !== undefined && this.editData?.currentValue !== newValue) {
       const mapFeatureObservableProperty = new MapFeatureObservableProperty();
@@ -144,7 +136,7 @@ export class MapPropertiesComponent {
 
       const observableProperty = new ObservableProperty();
       observableProperty.setTitle(this.editData.title);
-      observableProperty.setValue(this.setValue(newValue, this.editData.valueType));
+      observableProperty.setValue(MapPropertiesComponent.setValue(newValue, this.editData.valueType));
 
       mapFeatureObservableProperty.setObservableProperty(observableProperty);
 
@@ -153,4 +145,14 @@ export class MapPropertiesComponent {
 
     this.editData = undefined;
   }
+}
+
+export interface IEditDate {
+  type: string;
+  id: string;
+  title: string;
+  valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
+    keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
+    ];
+  currentValue: any;
 }

@@ -19,7 +19,7 @@ import * as typescript from 'typescript';
 })
 export class MapBrowserComponent implements AfterViewInit {
 
-  public map?: Map;
+  map?: Map;
 
   ngAfterViewInit(): void {
     this.map = new Map({
