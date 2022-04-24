@@ -90,6 +90,24 @@ export class MapPropertiesComponent {
     return observablePropertyValue;
   }
 
+  getValue(
+    observablePropertyValue: ObservablePropertyValue,
+    valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
+      keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
+      ]
+  ): any {
+    return MapPropertiesComponent.getValue(observablePropertyValue, valueType);
+  }
+
+  setValue(
+    value: any,
+    valueType: MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap[
+      keyof MapFeaturesMetadata.ObservablePropertyMetadata.ValueTypeMap
+      ]
+  ): ObservablePropertyValue {
+    return MapPropertiesComponent.setValue(value, valueType);
+  }
+
   addMetadata(mapFeaturesMetadata: MapFeaturesMetadata): void {
     if (mapFeaturesMetadata.getObservablePropertiesMetadataList().length !== 0) {
       this.mapFeaturesWithObservablePropertiesMetadata.push(mapFeaturesMetadata);

@@ -95,8 +95,8 @@ describe('MapPropertiesComponent test', () => {
       {type: 8, value: '0o101100'}
     ];
     for (const option of options) {
-      const observablePropertyValueMock = MapPropertiesComponent.setValue(option.value, option.type);
-      expect(MapPropertiesComponent.getValue(observablePropertyValueMock, option.type)).toEqual(option.value);
+      const observablePropertyValueMock = component.setValue(option.value, option.type);
+      expect(component.getValue(observablePropertyValueMock, option.type)).toEqual(option.value);
     }
   });
 
