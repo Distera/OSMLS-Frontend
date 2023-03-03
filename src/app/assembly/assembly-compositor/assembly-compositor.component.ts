@@ -9,7 +9,6 @@ import {AssembliesService} from '../../generated/api/services/assemblies.service
 })
 export class AssemblyCompositorComponent {
   uploadsCount = 0;
-  fileList: NzUploadFile[] = [];
 
   constructor(private assembliesService: AssembliesService) {}
 
@@ -19,7 +18,6 @@ export class AssemblyCompositorComponent {
     this.assembliesService.assembliesPost({body: {assembly: file as any}}).subscribe(
       () => {
         this.uploadsCount--;
-        this.fileList = [];
         console.log(file.name + ' upload successfully.');
       },
       () => {

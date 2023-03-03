@@ -1,0 +1,47 @@
+<nz-collapse>
+  <nz-collapse-panel
+    *ngFor="let metadata of mapFeaturesWithObservablePropertiesMetadata"
+    [nzHeader]="metadata.getTypeFullName()"
+  >
+    <nz-table #featuresTable class="featuresTable"
+              *ngVar="idsToFeaturesByType.getValue(metadata.getTypeFullName())! as idsToFeatures"
+              [nzData]="idsToFeatures.keys()">
+      <thead>
+      <tr>
+        <th
+          *ngFor="let propertyMetadata of metadata.getObservablePropertiesMetadataList()">{{propertyMetadata.getTitle()}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="editable-row" *ngFor="let featureId of featuresTable.data">
+        <td *ngFor="let propertyMetadata of metadata.getObservablePropertiesMetadataList()">
+          <div
+            *ngVar="getValue(idsToFeatures.getValue(featureId).getValue(propertyMetadata.getTitle())!, propertyMetadata.getValueType()) as value">
+
+            <div *ngIf="propertyMetadata.getEditable(); then editableTemplate else nonEditableTemplate"></div>
+            <ng-template #nonEditableTemplate>
+              {{value}}
+            </ng-template>
+            <ng-template #editableTemplate>
+              <div
+                *ngIf="editData?.id === featureId && editData?.title === propertyMetadata.getTitle(); then editorTemplate else editorTemplateFace"></div>
+
+              <ng-template #editorTemplateFace>
+                <div class="editable-cell"
+                     (click)="editData={type: metadata.getTypeFullName(), id: featureId, title: propertyMetadata.getTitle(), valueType: propertyMetadata.getValueType(), currentValue: value}">
+                  {{ value }}
+                </div>
+              </ng-template>
+
+              <ng-template #editorTemplate>
+                <!--TODO: Add switch case by propertyMetadata value type.-->
+                <input #input type="text" nz-input [value]="editData?.currentValue" (blur)="stopEdit(input.value)"/>
+              </ng-template>
+            </ng-template>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+  </nz-collapse-panel>
+</nz-collapse>

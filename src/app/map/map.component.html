@@ -1,1 +1,19 @@
-<app-map-browser *ngIf="mapFeaturesCluster" [mapFeaturesCluster]="mapFeaturesCluster"></app-map-browser>
+<div class="map-container">
+  <div class="map-browser-container">
+    <app-map-browser></app-map-browser>
+  </div>
+  <div class="map-details-container">
+    <nz-tabset>
+      <nz-tab nzTitle="Properties">
+        <app-map-properties class="map-details-tab-content"
+                            (setPropertyEvent)="setMapFeatureObservableProperty($event)">
+        </app-map-properties>
+      </nz-tab>
+      <nz-tab nzTitle="Report">
+        <app-map-report class="map-details-tab-content"></app-map-report>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>
+
+

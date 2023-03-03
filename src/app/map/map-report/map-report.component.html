@@ -1,0 +1,113 @@
+<p>
+  Report update interval (seconds):
+  <nz-input-number
+    [disabled]="isReportingActive"
+    [(ngModel)]="reportUpdateIntervalSeconds"
+    [nzMin]="1"
+    [nzMax]="1000"
+    [nzStep]="1"
+  ></nz-input-number>
+</p>
+
+<div *ngIf="isReportingActive; then stopReportingTemplate else startReportingTemplate"></div>
+<ng-template #startReportingTemplate>
+  <button [disabled]="!reportUpdateIntervalSeconds" nz-button nzType="primary"
+          (click)="isReportingActive = true">
+    Start Reporting <i nz-icon nzType="play-circle" nzTheme="outline"></i>
+  </button>
+</ng-template>
+<ng-template #stopReportingTemplate>
+  <button nz-button [nzDanger]="true" nzType="default" (click)="isReportingActive = false">
+    Stop Reporting <i nz-icon nzType="stop" nzTheme="outline"></i>
+  </button>
+</ng-template>
+
+<nz-divider nzText="REPORT"></nz-divider>
+
+<div *ngIf="report; else emptyReport" class="report-container">
+  <h3>General Info</h3>
+
+  <h4>Report Start Date</h4>
+  <p>{{reportStartDate}}</p>
+
+  <h4>Report End Date</h4>
+  <p>{{report.date}}</p>
+
+  <nz-divider></nz-divider>
+  <nz-empty *ngIf="report.typesReports.length === 0"></nz-empty>
+  <div *ngFor="let typeReport of report.typesReports">
+    <h3>Type «{{typeReport.name}}»</h3>
+
+    <ngx-charts-line-chart
+      [view]="[650,400]"
+      [results]="[{name: typeReport.name, series: typeReport.featuresCountChartData.series}]"
+      xAxisLabel="Time"
+      [autoScale]="true"
+      yAxisLabel="«{{typeReport.name}}» Unique Features Count"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxis]="true"
+      [yAxis]="true">
+    </ngx-charts-line-chart>
+    <nz-divider></nz-divider>
+
+    <div *ngFor="let propertyReport of typeReport.propertiesReports">
+      <h4>Property «{{propertyReport.title}}»</h4>
+
+      <div *ngIf="propertyReport.numericData !== undefined">
+        <ngx-charts-line-chart
+          *ngIf="propertyReport.numericData.featuresChartData !== undefined"
+          [view]="[650,400]"
+          [results]="propertyReport.numericData.featuresChartData"
+          xAxisLabel="Time"
+          [autoScale]="true"
+          legendTitle="Feature ID"
+          yAxisLabel="«{{propertyReport.title}}»"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true">
+        </ngx-charts-line-chart>
+        <nz-divider></nz-divider>
+
+        <ngx-charts-bar-vertical
+          *ngIf="propertyReport.numericData.featuresMeanChartData !== undefined"
+          [view]="[650,400]"
+          [results]="propertyReport.numericData.featuresMeanChartData"
+          xAxisLabel="Feature ID"
+          legendTitle="Feature ID"
+          yAxisLabel="Mean «{{propertyReport.title}}»"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true">
+        </ngx-charts-bar-vertical>
+        <nz-divider></nz-divider>
+      </div>
+      <div *ngIf="propertyReport.literalData !== undefined">
+        <ngx-charts-bar-horizontal-normalized
+          *ngIf="propertyReport.literalData.featuresChartData !== undefined"
+          [view]="[650,400]"
+          [results]="propertyReport.literalData.featuresChartData"
+          xAxisLabel="Duration %"
+          legendTitle="«{{propertyReport.title}}»"
+          yAxisLabel="Feature ID"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true">
+        </ngx-charts-bar-horizontal-normalized>
+        <nz-divider></nz-divider>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyReport>
+  <nz-empty></nz-empty>
+</ng-template>
+
+<br/>
